@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeviceTreeNodeTests", "Devi
 		{4909BB2B-EAFA-4F70-A9B1-9992352DF0EF} = {4909BB2B-EAFA-4F70-A9B1-9992352DF0EF}
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DtbTool", "DtbTool\DtbTool.csproj", "{8E06B3D0-3036-4FF3-B1F3-5AC1148DD5E6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,6 +25,10 @@ Global
 		{8E02C719-D975-42B2-9277-ABCBCE391779}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8E02C719-D975-42B2-9277-ABCBCE391779}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8E02C719-D975-42B2-9277-ABCBCE391779}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8E06B3D0-3036-4FF3-B1F3-5AC1148DD5E6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8E06B3D0-3036-4FF3-B1F3-5AC1148DD5E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8E06B3D0-3036-4FF3-B1F3-5AC1148DD5E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8E06B3D0-3036-4FF3-B1F3-5AC1148DD5E6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

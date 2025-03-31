@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "DtbTool": {
+      "commandName": "Project",
+      "commandLineArgs": "test.dtb print"
+    }
+  }
+}

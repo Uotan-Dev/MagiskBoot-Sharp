@@ -4,6 +4,9 @@ using System.Text;
 
 namespace DeviceTreeNode.Nodes
 {
+    /// <summary>
+    /// 设备树节点
+    /// </summary>
     public class FdtNode
     {
         private readonly Fdt _owner;
@@ -28,7 +31,7 @@ namespace DeviceTreeNode.Nodes
         /// <summary>
         /// 获取所有节点属性
         /// </summary>
-        public IEnumerable<NodeProperty> Properties()
+        public virtual IEnumerable<NodeProperty> Properties()
         {
             var stream = new FdtData(_props);
 
@@ -57,7 +60,7 @@ namespace DeviceTreeNode.Nodes
         /// <summary>
         /// 获取所有子节点
         /// </summary>
-        public IEnumerable<FdtNode> Children()
+        public virtual IEnumerable<FdtNode> Children()
         {
             var stream = new FdtData(_props);
 

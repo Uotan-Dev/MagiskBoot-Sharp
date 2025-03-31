@@ -8,13 +8,19 @@ namespace DeviceTreeNode.Nodes
         private readonly Fdt _owner;
 
         public string Name { get; }
-        public byte[] Value { get; }
+        public byte[] Value { get; private set; }
 
         public NodeProperty(string name, byte[] value, Fdt owner)
         {
             Name = name;
-            Value = value;
+            Value = value ?? Array.Empty<byte>();
             _owner = owner;
+        }
+
+        // 修改属性值
+        public void SetValue(byte[] newValue)
+        {
+            Value = newValue ?? Array.Empty<byte>();
         }
 
         public static NodeProperty Parse(FdtData stream, Fdt owner)
