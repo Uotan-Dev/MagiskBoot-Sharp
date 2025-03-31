@@ -4,6 +4,11 @@ VisualStudioVersion = 17.13.35919.96
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeviceTreeNode", "DeviceTreeNode\DeviceTreeNode.csproj", "{4909BB2B-EAFA-4F70-A9B1-9992352DF0EF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeviceTreeNodeTests", "DeviceTreeNodeTests\DeviceTreeNodeTests.csproj", "{8E02C719-D975-42B2-9277-ABCBCE391779}"
+	ProjectSection(ProjectDependencies) = postProject
+		{4909BB2B-EAFA-4F70-A9B1-9992352DF0EF} = {4909BB2B-EAFA-4F70-A9B1-9992352DF0EF}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -14,6 +19,10 @@ Global
 		{4909BB2B-EAFA-4F70-A9B1-9992352DF0EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4909BB2B-EAFA-4F70-A9B1-9992352DF0EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4909BB2B-EAFA-4F70-A9B1-9992352DF0EF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8E02C719-D975-42B2-9277-ABCBCE391779}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8E02C719-D975-42B2-9277-ABCBCE391779}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8E02C719-D975-42B2-9277-ABCBCE391779}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8E02C719-D975-42B2-9277-ABCBCE391779}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
