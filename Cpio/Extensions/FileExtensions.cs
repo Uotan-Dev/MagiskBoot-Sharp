@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Cpio.Extensions
+﻿namespace Cpio.Extensions
 {
     /// <summary>
     /// 文件相关的扩展方法

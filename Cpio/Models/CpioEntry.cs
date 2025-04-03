@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Cpio.Models
+﻿namespace Cpio.Models
 {
     /// <summary>
     /// CPIO 归档中的单个条目

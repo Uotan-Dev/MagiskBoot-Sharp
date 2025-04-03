@@ -1,13 +1,8 @@
 ﻿using Cpio.Extensions;
 using Cpio.Helpers;
 using Cpio.Models;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
-using System.Threading.Tasks;
 using ByteConverter = Cpio.Helpers.ByteConverter;
 
 namespace Cpio
@@ -270,7 +265,7 @@ namespace Cpio
                     string linkTarget = Encoding.UTF8.GetString(entry.Data);
                     // 跨平台考虑，写入文本文件表示链接指向
                     File.WriteAllText(outputPath, $"Symlink to: {linkTarget}");
-                    
+
                     break;
 
                 case CpioFileType.S_IFBLK:

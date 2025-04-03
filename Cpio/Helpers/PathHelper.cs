@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Cpio.Helpers
+﻿namespace Cpio.Helpers
 {
     /// <summary>
     /// 路径处理辅助类
