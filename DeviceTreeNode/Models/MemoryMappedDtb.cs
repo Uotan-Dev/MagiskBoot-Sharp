@@ -372,7 +372,7 @@ namespace DeviceTreeNode.Models
         /// </summary>
         private string PatchVerityFlags(string flags)
         {
-            string[] verityFlags = { "verify", "avb", "verity" };
+            string[] verityFlags = ["verify", "avb", "verity"];
             string result = flags;
 
             foreach (var flag in verityFlags)

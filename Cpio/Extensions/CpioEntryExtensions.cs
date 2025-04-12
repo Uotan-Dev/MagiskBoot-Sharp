@@ -53,7 +53,7 @@ namespace Cpio.Extensions
         /// <returns>格式化的大小字符串</returns>
         private static string FormatSize(long bytes)
         {
-            string[] suffixes = { "B", "K", "M", "G", "T" };
+            string[] suffixes = ["B", "K", "M", "G", "T"];
             int order = 0;
             double size = bytes;
 

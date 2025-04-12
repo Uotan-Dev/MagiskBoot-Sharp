@@ -140,15 +140,15 @@ namespace HexPatch
         /// </summary>
         private static int? MatchVerityPattern(byte[] buffer)
         {
-            return MatchPatterns(buffer, new[]
-            {
+            return MatchPatterns(buffer,
+            [
                 "verifyatboot",
                 "verify",
                 "avb_keys",
                 "avb",
                 "support_scfs",
                 "fsverity"
-            });
+            ]);
         }
 
         /// <summary>
@@ -156,12 +156,12 @@ namespace HexPatch
         /// </summary>
         private static int? MatchEncryptionPattern(byte[] buffer)
         {
-            return MatchPatterns(buffer, new[]
-            {
+            return MatchPatterns(buffer,
+            [
                 "forceencrypt",
                 "forcefdeorfbe",
                 "fileencryption"
-            });
+            ]);
         }
 
         /// <summary>

@@ -112,7 +112,7 @@ namespace DeviceTreeNode.Core
         {
             // 移除与verity相关的标志
             string result = flags;
-            string[] verityFlags = { "verify", "avb", "verity" };
+            string[] verityFlags = ["verify", "avb", "verity"];
 
             foreach (var flag in verityFlags)
             {

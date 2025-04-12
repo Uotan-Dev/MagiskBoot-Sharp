@@ -47,7 +47,7 @@ public class Fdt
         if (!path.StartsWith("/"))
             path = "/" + path;
 
-        string[] parts = path.Split(new[] { '/' }, StringSplitOptions.RemoveEmptyEntries);
+        string[] parts = path.Split(['/'], StringSplitOptions.RemoveEmptyEntries);
 
         // 从根节点开始查找
         FdtNode current = Root.Node;

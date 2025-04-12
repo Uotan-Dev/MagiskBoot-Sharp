@@ -30,14 +30,14 @@ namespace DeviceTreeNodeTests
         public void TestBigEndianValues()
         {
             // 测试32位大端序值解析
-            byte[] bytes32 = new byte[] { 0x12, 0x34, 0x56, 0x78 };
+            byte[] bytes32 = [0x12, 0x34, 0x56, 0x78];
             var value32 = BigEndianU32.FromBytes(bytes32);
 
             Assert.IsTrue(value32.HasValue);
             Assert.AreEqual(0x12345678u, value32.Value.Value);
 
             // 测试64位大端序值解析
-            byte[] bytes64 = new byte[] { 0x12, 0x34, 0x56, 0x78, 0x9A, 0xBC, 0xDE, 0xF0 };
+            byte[] bytes64 = [0x12, 0x34, 0x56, 0x78, 0x9A, 0xBC, 0xDE, 0xF0];
             var value64 = BigEndianU64.FromBytes(bytes64);
 
             Assert.IsTrue(value64.HasValue);
@@ -48,11 +48,11 @@ namespace DeviceTreeNodeTests
         public void TestFdtDataOperations()
         {
             // 创建测试数据
-            byte[] testData = new byte[] {
+            byte[] testData = [
                 0x01, 0x02, 0x03, 0x04,  // BigEndianU32 = 0x01020304
                 0x05, 0x06, 0x07, 0x08,  // BigEndianU32 = 0x05060708
                 0x09, 0x0A, 0x0B, 0x0C, 0x0D, 0x0E, 0x0F, 0x10 // BigEndianU64
-            };
+            ];
 
             var fdtData = new FdtData(testData);
 
@@ -203,7 +203,7 @@ namespace DeviceTreeNodeTests
         public void TestCStringParsing()
         {
             // NULL终止的字符串测试
-            byte[] testString = new byte[] { (byte)'t', (byte)'e', (byte)'s', (byte)'t', 0 };
+            byte[] testString = [(byte)'t', (byte)'e', (byte)'s', (byte)'t', 0];
             var cstr = CString.FromBytes(testString);
 
             Assert.IsNotNull(cstr);
@@ -211,7 +211,7 @@ namespace DeviceTreeNodeTests
             Assert.AreEqual("test", cstr.AsString());
 
             // 没有NULL终止符的情况
-            byte[] invalidString = new byte[] { (byte)'t', (byte)'e', (byte)'s', (byte)'t' };
+            byte[] invalidString = [(byte)'t', (byte)'e', (byte)'s', (byte)'t'];
             var invalidCstr = CString.FromBytes(invalidString);
 
             Assert.IsNull(invalidCstr);

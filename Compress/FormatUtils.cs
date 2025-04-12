@@ -1,6 +1,6 @@
 ﻿using System.Text;
 
-namespace FormatCheck
+namespace Compress
 {
     // 文件格式枚举
     public enum Format

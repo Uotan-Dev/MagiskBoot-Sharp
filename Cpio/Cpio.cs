@@ -342,7 +342,7 @@ namespace Cpio
             else
             {
                 // 不应该到达这里 - 目录应使用 Mkdir 方法
-                content = new byte[0];
+                content = [];
                 mode |= CpioFileType.S_IFDIR;
             }
 
@@ -375,7 +375,7 @@ namespace Cpio
                 Gid = 0,
                 RdevMajor = 0,
                 RdevMinor = 0,
-                Data = new byte[0]
+                Data = []
             };
 
             Console.Error.WriteLine($"Create directory [{dir}] ({mode:o4})");
