@@ -29,6 +29,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LZ4Library", "LZ4Library\LZ
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Compress", "Compress\Compress.csproj", "{5F31B7F4-8641-43A9-AFB8-57B3A203A5FF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CompressCommandLine", "CompressCommandLine\CompressCommandLine.csproj", "{05055EC0-0B01-4083-A4BC-D90B177A0F4B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -83,6 +85,10 @@ Global
 		{5F31B7F4-8641-43A9-AFB8-57B3A203A5FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5F31B7F4-8641-43A9-AFB8-57B3A203A5FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5F31B7F4-8641-43A9-AFB8-57B3A203A5FF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{05055EC0-0B01-4083-A4BC-D90B177A0F4B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{05055EC0-0B01-4083-A4BC-D90B177A0F4B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{05055EC0-0B01-4083-A4BC-D90B177A0F4B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{05055EC0-0B01-4083-A4BC-D90B177A0F4B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
