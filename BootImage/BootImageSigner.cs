@@ -1,6 +1,5 @@
-using System.Text;
-using Sign;
 using Compress;
+using Sign;
 
 namespace BootImage
 {
@@ -56,7 +55,7 @@ namespace BootImage
 
                 // 使用Sign库中的BootSignatureUtils.SignBootImage方法生成签名数据
                 byte[] signature = BootSignatureUtils.SignBootImage(payload, name, certPath, keyPath);
-                
+
                 if (signature == null || signature.Length == 0)
                 {
                     Console.WriteLine("生成签名数据失败");
@@ -68,13 +67,13 @@ namespace BootImage
 
                 // 计算EOF位置：原始尾部数据开始的位置
                 long eof = bootImage._fileData.Length - (bootImage.Tail?.Length ?? 0);
-                
+
                 // 在文件末尾添加签名块
                 fs.Position = eof;
-                
+
                 // 写入签名数据
                 fs.Write(signature, 0, signature.Length);
-                
+
                 // 如果需要，用零填充剩余空间
                 long currentPosition = fs.Position;
                 if (currentPosition < bootImage._fileData.Length)
@@ -82,7 +81,7 @@ namespace BootImage
                     byte[] padding = new byte[bootImage._fileData.Length - currentPosition];
                     fs.Write(padding, 0, padding.Length);
                 }
-                
+
                 Console.WriteLine("签名成功");
                 return true;
             }
@@ -105,14 +104,14 @@ namespace BootImage
             {
                 // 读取内核文件
                 byte[] kernel = File.ReadAllBytes(kernelPath);
-                
+
                 // 查找DTB偏移
                 int dtbOffset = FindDtbOffset(kernel);
                 if (dtbOffset > 0)
                 {
                     // 检测内核格式
                     Format format = FormatUtils.CheckFormat(kernel, kernel.Length);
-                    
+
                     if (!skipDecomp && FormatUtils.IsCompressedFormat(format))
                     {
                         // 解压内核部分
@@ -125,10 +124,10 @@ namespace BootImage
                         // 直接写入内核部分
                         File.WriteAllBytes(BootImage.KERNEL_FILE, kernel.AsSpan(0, dtbOffset).ToArray());
                     }
-                    
+
                     // 写入DTB部分
                     File.WriteAllBytes(BootImage.KER_DTB_FILE, kernel.AsSpan(dtbOffset).ToArray());
-                    
+
                     Console.WriteLine($"成功从 {kernelPath} 提取DTB");
                     return true;
                 }
@@ -144,7 +143,7 @@ namespace BootImage
                 return false;
             }
         }
-        
+
         #region 私有方法
         /// <summary>
         /// 获取负载部分的大小
@@ -161,22 +160,22 @@ namespace BootImage
             };
 
             int headerSpace = AlignTo(headerSize, (int)bootImage.PageSize);
-            
+
             // 计算内核空间
             int kernelSpace = AlignTo(bootImage.Kernel?.Length ?? 0, (int)bootImage.PageSize);
-            
+
             // 计算ramdisk空间
             int ramdiskSpace = AlignTo(bootImage.Ramdisk?.Length ?? 0, (int)bootImage.PageSize);
-            
+
             // 计算second空间
             int secondSpace = AlignTo(bootImage.Second?.Length ?? 0, (int)bootImage.PageSize);
-            
+
             // 计算extra空间
             int extraSpace = AlignTo(bootImage.Extra?.Length ?? 0, (int)bootImage.PageSize);
-            
+
             // 计算dtb空间
             int dtbSpace = AlignTo(bootImage.Dtb?.Length ?? 0, (int)bootImage.PageSize);
-            
+
             // 负载总大小
             return headerSpace + kernelSpace + ramdiskSpace + secondSpace + extraSpace + dtbSpace;
         }
@@ -188,15 +187,15 @@ namespace BootImage
         {
             return (value + alignment - 1) & ~(alignment - 1);
         }
-        
+
         /// <summary>
         /// 查找DTB在内核中的偏移
         /// </summary>
         private static int FindDtbOffset(byte[] kernel)
         {
             // DTB魔数，小端序FDT魔数 (0xD00DFEED)
-            byte[] dtbMagic = [0xD0, 0x0D, 0xFE, 0xED];
-            
+            byte[] dtbMagic = new byte[] { 0xD0, 0x0D, 0xFE, 0xED };
+
             // 从头开始搜索DTB魔数
             for (int i = 0; i <= kernel.Length - dtbMagic.Length; i++)
             {
@@ -209,7 +208,7 @@ namespace BootImage
                         break;
                     }
                 }
-                
+
                 if (found)
                 {
                     // 找到魔数后，还需要进行额外验证以确保这是真正的DTB头部
@@ -217,18 +216,18 @@ namespace BootImage
                     {
                         // 读取totalsize
                         uint totalsize = BitConverter.ToUInt32(kernel, i + 4);
-                        
+
                         // 检查totalsize是否超出内核大小
                         if (totalsize > kernel.Length - i)
                             continue;
-                            
+
                         // 读取off_dt_struct
                         uint offDtStruct = BitConverter.ToUInt32(kernel, i + 8);
-                        
+
                         // 检查off_dt_struct是否超出内核大小
                         if (offDtStruct > kernel.Length - i)
                             continue;
-                            
+
                         // 检查第一个节点的tag是否为FDT_BEGIN_NODE (1)
                         if (i + offDtStruct + 4 <= kernel.Length)
                         {
@@ -239,7 +238,7 @@ namespace BootImage
                     }
                 }
             }
-            
+
             return -1; // 未找到DTB
         }
         #endregion

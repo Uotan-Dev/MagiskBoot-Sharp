@@ -1,5 +1,4 @@
 using Compress;
-using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -57,21 +56,21 @@ namespace BootImage
         private static int CompressData(FileStream outputStream, byte[] data, Format format)
         {
             long startPos = outputStream.Position;
-            
+
             using var inputStream = new MemoryStream(data);
             CompressionManager.Compress(inputStream, outputStream, format);
-            
+
             return (int)(outputStream.Position - startPos);
         }
 
         /// <summary>
         /// 更新校验和
         /// </summary>
-        private static void UpdateChecksum(byte[] headerData, bool useSHA256, byte[] kernelData, byte[] ramdiskData, 
+        private static void UpdateChecksum(byte[] headerData, bool useSHA256, byte[] kernelData, byte[] ramdiskData,
             byte[] secondData, byte[] extraData, byte[] recoveryDtboData, byte[] dtbData)
         {
             using HashAlgorithm hasher = useSHA256 ? SHA256.Create() : SHA1.Create();
-            
+
             // 获取ID字段在头部中的偏移
             int idOffset = 576; // 基于bootimg.hpp中的定义
 
@@ -82,48 +81,48 @@ namespace BootImage
                 byte[] size = BitConverter.GetBytes(kernelData.Length);
                 hasher.TransformBlock(size, 0, size.Length, null, 0);
             }
-            
+
             if (ramdiskData != null && ramdiskData.Length > 0)
             {
                 hasher.TransformBlock(ramdiskData, 0, ramdiskData.Length, null, 0);
                 byte[] size = BitConverter.GetBytes(ramdiskData.Length);
                 hasher.TransformBlock(size, 0, size.Length, null, 0);
             }
-            
+
             if (secondData != null && secondData.Length > 0)
             {
                 hasher.TransformBlock(secondData, 0, secondData.Length, null, 0);
                 byte[] size = BitConverter.GetBytes(secondData.Length);
                 hasher.TransformBlock(size, 0, size.Length, null, 0);
             }
-            
+
             if (extraData != null && extraData.Length > 0)
             {
                 hasher.TransformBlock(extraData, 0, extraData.Length, null, 0);
                 byte[] size = BitConverter.GetBytes(extraData.Length);
                 hasher.TransformBlock(size, 0, size.Length, null, 0);
             }
-            
+
             if (recoveryDtboData != null && recoveryDtboData.Length > 0)
             {
                 hasher.TransformBlock(recoveryDtboData, 0, recoveryDtboData.Length, null, 0);
                 byte[] size = BitConverter.GetBytes(recoveryDtboData.Length);
                 hasher.TransformBlock(size, 0, size.Length, null, 0);
             }
-            
+
             if (dtbData != null && dtbData.Length > 0)
             {
                 hasher.TransformBlock(dtbData, 0, dtbData.Length, null, 0);
                 byte[] size = BitConverter.GetBytes(dtbData.Length);
                 hasher.TransformBlock(size, 0, size.Length, null, 0);
             }
-            
+
             hasher.TransformFinalBlock(Array.Empty<byte>(), 0, 0);
-            
+
             // 清空ID字段
             for (int i = 0; i < 32; i++)
                 headerData[idOffset + i] = 0;
-            
+
             // 写入新的校验和
             byte[] hash = hasher.Hash;
             Buffer.BlockCopy(hash, 0, headerData, idOffset, hash.Length);
@@ -141,7 +140,7 @@ namespace BootImage
             Console.WriteLine($"Repack to boot image: [{outImg}]");
 
             using var bootImage = new BootImage(srcImg);
-            
+
             // 用于记录各部分的偏移
             int headerOffset = 0;
             int kernelOffset = 0;
@@ -192,18 +191,18 @@ namespace BootImage
 
             // 处理内核
             kernelOffset = (int)fs.Position;
-            
+
             // 如果存在KERNEL_FILE，读取并处理
             if (File.Exists(BootImage.KERNEL_FILE))
             {
                 byte[] kernelData = File.ReadAllBytes(BootImage.KERNEL_FILE);
-                
+
                 // 如果需要压缩且输入不是压缩格式
-                if (!skipComp && !FormatUtils.IsCompressedFormat(FormatUtils.CheckFormat(kernelData,kernelData.Length)) && 
+                if (!skipComp && !FormatUtils.IsCompressedFormat(FormatUtils.CheckFormat(kernelData, kernelData.Length)) &&
                     FormatUtils.IsCompressedFormat(bootImage.KernelFormat))
                 {
                     int size = CompressData(fs, kernelData, bootImage.KernelFormat);
-                    
+
                     // 更新头部信息
                     BitConverter.GetBytes((uint)size).CopyTo(headerData, 8);
                 }
@@ -211,7 +210,7 @@ namespace BootImage
                 {
                     // 直接写入
                     fs.Write(kernelData, 0, kernelData.Length);
-                    
+
                     // 更新头部信息
                     BitConverter.GetBytes((uint)kernelData.Length).CopyTo(headerData, 8);
                 }
@@ -220,7 +219,7 @@ namespace BootImage
             {
                 // 如果没有KERNEL_FILE但有原始内核数据，则使用原始数据
                 fs.Write(bootImage.Kernel, 0, bootImage.Kernel.Length);
-                
+
                 // 更新头部信息
                 BitConverter.GetBytes((uint)bootImage.Kernel.Length).CopyTo(headerData, 8);
             }
@@ -230,13 +229,13 @@ namespace BootImage
             {
                 byte[] kernelDtbData = File.ReadAllBytes(BootImage.KER_DTB_FILE);
                 fs.Write(kernelDtbData, 0, kernelDtbData.Length);
-                
+
                 // 更新内核大小，加上DTB大小
                 uint kernelSize = BitConverter.ToUInt32(headerData, 8);
                 kernelSize += (uint)kernelDtbData.Length;
                 BitConverter.GetBytes(kernelSize).CopyTo(headerData, 8);
             }
-            
+
             // 页面对齐
             PadAlignment(fs, headerOffset, (int)bootImage.PageSize);
 
@@ -254,13 +253,13 @@ namespace BootImage
             else if (File.Exists(BootImage.RAMDISK_FILE))
             {
                 byte[] ramdiskData = File.ReadAllBytes(BootImage.RAMDISK_FILE);
-                
+
                 // 如果需要压缩且输入不是压缩格式
-                if (!skipComp && !FormatUtils.IsCompressedFormat(FormatUtils.CheckFormat(ramdiskData,ramdiskData.Length)) && 
+                if (!skipComp && !FormatUtils.IsCompressedFormat(FormatUtils.CheckFormat(ramdiskData, ramdiskData.Length)) &&
                     FormatUtils.IsCompressedFormat(bootImage.RamdiskFormat))
                 {
                     int size = CompressData(fs, ramdiskData, bootImage.RamdiskFormat);
-                    
+
                     // 更新头部信息
                     BitConverter.GetBytes((uint)size).CopyTo(headerData, 16);
                 }
@@ -268,11 +267,11 @@ namespace BootImage
                 {
                     // 直接写入
                     fs.Write(ramdiskData, 0, ramdiskData.Length);
-                    
+
                     // 更新头部信息
                     BitConverter.GetBytes((uint)ramdiskData.Length).CopyTo(headerData, 16);
                 }
-                
+
                 // 页面对齐
                 PadAlignment(fs, headerOffset, (int)bootImage.PageSize);
             }
@@ -282,10 +281,10 @@ namespace BootImage
             if (File.Exists(BootImage.SECOND_FILE))
             {
                 int size = RestoreFile(fs, BootImage.SECOND_FILE);
-                
+
                 // 更新头部信息
                 BitConverter.GetBytes((uint)size).CopyTo(headerData, 24);
-                
+
                 // 页面对齐
                 PadAlignment(fs, headerOffset, (int)bootImage.PageSize);
             }
@@ -295,13 +294,13 @@ namespace BootImage
             if (File.Exists(BootImage.EXTRA_FILE))
             {
                 byte[] extraData = File.ReadAllBytes(BootImage.EXTRA_FILE);
-                
+
                 // 如果需要压缩且输入不是压缩格式
-                if (!skipComp && !FormatUtils.IsCompressedFormat(FormatUtils.CheckFormat(extraData,extraData.Length)) && 
+                if (!skipComp && !FormatUtils.IsCompressedFormat(FormatUtils.CheckFormat(extraData, extraData.Length)) &&
                     FormatUtils.IsCompressedFormat(bootImage.ExtraFormat))
                 {
                     int size = CompressData(fs, extraData, bootImage.ExtraFormat);
-                    
+
                     // 更新头部信息（如果适用）
                     if (bootImage.HeaderVersion == 0)
                     {
@@ -312,14 +311,14 @@ namespace BootImage
                 {
                     // 直接写入
                     fs.Write(extraData, 0, extraData.Length);
-                    
+
                     // 更新头部信息（如果适用）
                     if (bootImage.HeaderVersion == 0)
                     {
                         BitConverter.GetBytes((uint)extraData.Length).CopyTo(headerData, 48);
                     }
                 }
-                
+
                 // 页面对齐
                 PadAlignment(fs, headerOffset, (int)bootImage.PageSize);
             }
@@ -329,14 +328,14 @@ namespace BootImage
             {
                 int dtboOffset = (int)fs.Position;
                 int size = RestoreFile(fs, BootImage.RECV_DTBO_FILE);
-                
+
                 // 更新头部信息（如果适用）
                 if (bootImage.HeaderVersion == 1 || bootImage.HeaderVersion == 2)
                 {
                     BitConverter.GetBytes((uint)size).CopyTo(headerData, 1632);
                     BitConverter.GetBytes(dtboOffset).CopyTo(headerData, 1624);
                 }
-                
+
                 // 页面对齐
                 PadAlignment(fs, headerOffset, (int)bootImage.PageSize);
             }
@@ -346,13 +345,13 @@ namespace BootImage
             if (File.Exists(BootImage.DTB_FILE))
             {
                 int size = RestoreFile(fs, BootImage.DTB_FILE);
-                
+
                 // 更新头部信息（如果适用）
                 if (bootImage.HeaderVersion == 2)
                 {
                     BitConverter.GetBytes((uint)size).CopyTo(headerData, 1648);
                 }
-                
+
                 // 页面对齐
                 PadAlignment(fs, headerOffset, (int)bootImage.PageSize);
             }
@@ -361,7 +360,7 @@ namespace BootImage
             if (bootImage.IsSeandroid)
             {
                 fs.Write(Encoding.ASCII.GetBytes("SEANDROIDENFORCE"), 0, 16);
-                
+
                 if (bootImage.IsDhtb)
                 {
                     fs.Write(new byte[] { 0xFF, 0xFF, 0xFF, 0xFF }, 0, 4);
@@ -380,17 +379,17 @@ namespace BootImage
                 byte[] cmdlineBytes = Encoding.ASCII.GetBytes(headerProps["cmdline"]);
                 int maxLen = Math.Min(cmdlineBytes.Length, 512 + 1024);
                 Buffer.BlockCopy(cmdlineBytes, 0, headerData, 64, Math.Min(maxLen, 512));
-                
+
                 if (maxLen > 512)
                     Buffer.BlockCopy(cmdlineBytes, 512, headerData, 576, maxLen - 512);
             }
-            
+
             if (headerProps.ContainsKey("name"))
             {
                 byte[] nameBytes = Encoding.ASCII.GetBytes(headerProps["name"]);
                 Buffer.BlockCopy(nameBytes, 0, headerData, 32, Math.Min(nameBytes.Length, 16));
             }
-            
+
             if (headerProps.ContainsKey("os_version"))
             {
                 string[] version = headerProps["os_version"].Split('.');
@@ -399,19 +398,19 @@ namespace BootImage
                     int a = int.Parse(version[0]);
                     int b = int.Parse(version[1]);
                     int c = int.Parse(version[2]);
-                    
+
                     // 读取当前os_version获取patch_level
                     uint currentOsVersion = BitConverter.ToUInt32(headerData, 44);
                     uint patchLevel = currentOsVersion & 0x7ffu;
-                    
+
                     // 构建新的os_version
                     uint newOsVersion = (((uint)a << 14) | ((uint)b << 7) | (uint)c) << 11;
                     newOsVersion |= patchLevel;
-                    
+
                     BitConverter.GetBytes(newOsVersion).CopyTo(headerData, 44);
                 }
             }
-            
+
             if (headerProps.ContainsKey("os_patch_level"))
             {
                 string[] patchLevel = headerProps["os_patch_level"].Split('-');
@@ -419,14 +418,14 @@ namespace BootImage
                 {
                     int y = int.Parse(patchLevel[0]) - 2000;
                     int m = int.Parse(patchLevel[1]);
-                    
+
                     // 读取当前os_version
                     uint currentOsVersion = BitConverter.ToUInt32(headerData, 44);
                     uint osVer = currentOsVersion >> 11;
-                    
+
                     // 构建新的os_version
                     uint newOsVersion = (osVer << 11) | ((uint)y << 4) | (uint)m;
-                    
+
                     BitConverter.GetBytes(newOsVersion).CopyTo(headerData, 44);
                 }
             }
@@ -457,26 +456,26 @@ namespace BootImage
                     Magic = Encoding.ASCII.GetBytes("DHTB"),
                     Size = (uint)totalOffset - 512
                 };
-                
+
                 // 写入魔数
                 fs.Write(dhtbHeader.Magic, 0, dhtbHeader.Magic.Length);
-                
+
                 // 留空校验和区域
                 byte[] checksumData = new byte[40];
                 fs.Write(checksumData, 0, checksumData.Length);
-                
+
                 // 写入大小
                 byte[] sizeBytes = BitConverter.GetBytes(dhtbHeader.Size);
                 fs.Write(sizeBytes, 0, sizeBytes.Length);
-                
+
                 // 计算校验和
                 fs.Position = 512;
                 byte[] fileData = new byte[dhtbHeader.Size];
                 fs.Read(fileData, 0, fileData.Length);
-                
+
                 using var sha256 = SHA256.Create();
                 byte[] checksum = sha256.ComputeHash(fileData);
-                
+
                 // 写入校验和
                 fs.Position = 8;
                 fs.Write(checksum, 0, checksum.Length);

@@ -80,7 +80,7 @@ namespace HexPatch
         /// <summary>
         /// 将十六进制字符串转换为字节数组
         /// </summary>
-        private static byte[] HexToByte(string hex)
+        public static byte[] HexToByte(string hex)
         {
             byte[] hexBytes = Encoding.ASCII.GetBytes(hex);
             List<byte> result = new List<byte>(hexBytes.Length / 2);

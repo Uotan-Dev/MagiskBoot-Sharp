@@ -1011,7 +1011,7 @@ namespace BootImage
 
         private bool MatchMagic(int offset, byte[] magic, byte[] buffer = null)
         {
-            buffer ??= _fileData;
+            buffer = buffer ?? _fileData;
 
             if (offset + magic.Length > buffer.Length)
                 return false;

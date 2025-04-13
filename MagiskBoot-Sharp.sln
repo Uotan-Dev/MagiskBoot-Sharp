@@ -28,6 +28,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BootImageCommandLine", "Boo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sign", "Sign\Sign.csproj", "{9AABD37B-EFD1-4B34-9DFD-5A59B6786D98}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommandLine", "CommandLine\CommandLine.csproj", "{BD2B15D7-9DDF-4D3E-AE14-49D1C33214C9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -74,6 +76,10 @@ Global
 		{9AABD37B-EFD1-4B34-9DFD-5A59B6786D98}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9AABD37B-EFD1-4B34-9DFD-5A59B6786D98}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9AABD37B-EFD1-4B34-9DFD-5A59B6786D98}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BD2B15D7-9DDF-4D3E-AE14-49D1C33214C9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BD2B15D7-9DDF-4D3E-AE14-49D1C33214C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BD2B15D7-9DDF-4D3E-AE14-49D1C33214C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BD2B15D7-9DDF-4D3E-AE14-49D1C33214C9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

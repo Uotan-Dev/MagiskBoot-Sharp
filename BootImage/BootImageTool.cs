@@ -1,4 +1,3 @@
-using System.Text;
 using Compress;
 
 namespace BootImage
@@ -62,7 +61,7 @@ namespace BootImage
             {
                 Console.WriteLine($"验证引导镜像签名: [{imagePath}]");
                 bool result = BootImageSigner.Verify(imagePath, certPath);
-                
+
                 if (certPath == null)
                 {
                     Console.WriteLine($"镜像{(result ? "已" : "未")}签名");
@@ -71,7 +70,7 @@ namespace BootImage
                 {
                     Console.WriteLine($"使用证书 [{certPath}] 验证结果: {(result ? "通过" : "失败")}");
                 }
-                
+
                 return result;
             }
             catch (Exception ex)
@@ -95,7 +94,7 @@ namespace BootImage
             {
                 Console.WriteLine($"对引导镜像进行签名: [{imagePath}]");
                 bool result = BootImageSigner.Sign(imagePath, name, certPath, keyPath);
-                
+
                 Console.WriteLine($"签名{(result ? "成功" : "失败")}");
                 return result;
             }
@@ -118,7 +117,7 @@ namespace BootImage
             {
                 Console.WriteLine($"从内核中提取DTB: [{kernelPath}]");
                 bool result = BootImageSigner.SplitImageDtb(kernelPath, skipDecomp);
-                
+
                 Console.WriteLine($"提取{(result ? "成功" : "失败")}");
                 return result;
             }
@@ -139,37 +138,37 @@ namespace BootImage
             try
             {
                 Console.WriteLine($"引导镜像信息: [{imagePath}]");
-                
+
                 using var bootImage = new BootImage(imagePath);
-                
+
                 // 打印头部版本
                 Console.WriteLine($"HEADER_VER: [{bootImage.HeaderVersion}]");
-                
+
                 // 打印内核大小
                 Console.WriteLine($"KERNEL_SZ: [{bootImage.KernelSize}]");
-                
+
                 // 打印ramdisk大小
                 Console.WriteLine($"RAMDISK_SZ: [{bootImage.RamdiskSize}]");
-                
+
                 // 打印second大小（如果适用）
                 if (bootImage.HeaderVersion < 3)
                     Console.WriteLine($"SECOND_SZ: [{bootImage.SecondSize}]");
-                
+
                 // 打印extra大小（如果适用）
                 if (bootImage.HeaderVersion == 0)
                     Console.WriteLine($"EXTRA_SZ: [{bootImage.ExtraSize}]");
-                
+
                 // 打印recovery dtbo大小（如果适用）
                 if (bootImage.HeaderVersion == 1 || bootImage.HeaderVersion == 2)
                     Console.WriteLine($"RECOV_DTBO_SZ: [{bootImage.RecoveryDtboSize}]");
-                
+
                 // 打印dtb大小（如果适用）
                 if (bootImage.HeaderVersion == 2 || bootImage.HeaderVersion >= 3)
                     Console.WriteLine($"DTB_SZ: [{bootImage.DtbSize}]");
-                
+
                 // 打印页大小
                 Console.WriteLine($"PAGESIZE: [{bootImage.PageSize}]");
-                
+
                 // 打印OS版本（如果有）
                 if (bootImage.OsVersion != 0)
                 {
@@ -185,40 +184,40 @@ namespace BootImage
                     int m = patchLevel & 0xf;
                     Console.WriteLine($"OS_PATCH_LEVEL: [{y}-{m:D2}]");
                 }
-                
+
                 // 打印名称（如果有）
                 if (!string.IsNullOrEmpty(bootImage.Name))
                     Console.WriteLine($"NAME: [{bootImage.Name}]");
-                
+
                 // 打印命令行
                 Console.WriteLine($"CMDLINE: [{bootImage.Cmdline}{bootImage.ExtraCmdline}]");
-                
+
                 // 打印内核格式
                 Console.WriteLine($"KERNEL_FMT: [{FormatUtils.FormatToName(bootImage.KernelFormat)}]");
-                
+
                 // 打印ramdisk格式
                 Console.WriteLine($"RAMDISK_FMT: [{FormatUtils.FormatToName(bootImage.RamdiskFormat)}]");
-                
+
                 // 打印extra格式（如果有）
                 if (bootImage.Extra != null && bootImage.Extra.Length > 0)
                     Console.WriteLine($"EXTRA_FMT: [{FormatUtils.FormatToName(bootImage.ExtraFormat)}]");
-                
+
                 // 打印标志信息
                 if (bootImage.IsChromeOS)
                     Console.WriteLine("CHROMEOS");
-                
+
                 if (bootImage.IsDhtb)
                     Console.WriteLine("DHTB_HDR");
-                
+
                 if (bootImage.IsSeandroid)
                     Console.WriteLine("SAMSUNG_SEANDROID");
-                
+
                 if (bootImage.IsLgBump)
                     Console.WriteLine("LG_BUMP_IMAGE");
-                
+
                 if (bootImage.IsAvb1Signed)
                     Console.WriteLine("AVB1_SIGNED");
-                
+
                 return true;
             }
             catch (Exception ex)
