@@ -191,5 +191,13 @@ namespace Compress
                 _ => Format.UNKNOWN,
             };
         }
+        public static bool IsCompressedFormat(this Format format)
+        {
+            // Add logic to determine if the format is compressed
+            return format == Format.GZIP || format == Format.LZ4 || format == Format.XZ ||
+                   format == Format.LZMA || format == Format.BZIP2 || format == Format.LZOP ||
+                   format == Format.LZ4_LEGACY || format == Format.LZ4_LG || format == Format.ZIMAGE;
+        }
+        
     }
 }

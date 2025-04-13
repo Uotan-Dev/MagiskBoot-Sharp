@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeviceTreeNodeTests", "D:\S
 		{4909BB2B-EAFA-4F70-A9B1-9992352DF0EF} = {4909BB2B-EAFA-4F70-A9B1-9992352DF0EF}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DtbTool", "D:\Source Code\MagiskBoot-Sharp\DtbTool\DtbTool.csproj", "{8E06B3D0-3036-4FF3-B1F3-5AC1148DD5E6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeviceTreeNodeCommandLine", "DtbTool\DeviceTreeNodeCommandLine.csproj", "{8E06B3D0-3036-4FF3-B1F3-5AC1148DD5E6}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cpio", "D:\Source Code\MagiskBoot-Sharp\Cpio\Cpio.csproj", "{120A5EE9-525A-49A3-B663-E512DDEA18E3}"
 EndProject
@@ -18,6 +18,15 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Compress", "Compress\Compress.csproj", "{5F31B7F4-8641-43A9-AFB8-57B3A203A5FF}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CompressCommandLine", "CompressCommandLine\CompressCommandLine.csproj", "{05055EC0-0B01-4083-A4BC-D90B177A0F4B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BootImage", "BootImage\BootImage.csproj", "{BDE3D735-DB7C-476A-A85A-275D8C8757D1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BootImageCommandLine", "BootImageCommandLine\BootImageCommandLine.csproj", "{D3A7A46E-0678-42B2-A541-24A76C439A8B}"
+	ProjectSection(ProjectDependencies) = postProject
+		{BDE3D735-DB7C-476A-A85A-275D8C8757D1} = {BDE3D735-DB7C-476A-A85A-275D8C8757D1}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sign", "Sign\Sign.csproj", "{9AABD37B-EFD1-4B34-9DFD-5A59B6786D98}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -53,6 +62,18 @@ Global
 		{05055EC0-0B01-4083-A4BC-D90B177A0F4B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{05055EC0-0B01-4083-A4BC-D90B177A0F4B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{05055EC0-0B01-4083-A4BC-D90B177A0F4B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BDE3D735-DB7C-476A-A85A-275D8C8757D1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BDE3D735-DB7C-476A-A85A-275D8C8757D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BDE3D735-DB7C-476A-A85A-275D8C8757D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BDE3D735-DB7C-476A-A85A-275D8C8757D1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D3A7A46E-0678-42B2-A541-24A76C439A8B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D3A7A46E-0678-42B2-A541-24A76C439A8B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D3A7A46E-0678-42B2-A541-24A76C439A8B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D3A7A46E-0678-42B2-A541-24A76C439A8B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9AABD37B-EFD1-4B34-9DFD-5A59B6786D98}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9AABD37B-EFD1-4B34-9DFD-5A59B6786D98}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9AABD37B-EFD1-4B34-9DFD-5A59B6786D98}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9AABD37B-EFD1-4B34-9DFD-5A59B6786D98}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
